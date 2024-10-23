@@ -32,3 +32,46 @@ getUser(1, (user) => {
 });
 
 console.log("After");
+
+// What is a Promise?
+// A promise is an object that represents the eventual completion (or failure) of an asynchronous operation.
+// a promise can be in one of three states: pending, fulfilled, or rejected.
+// a new promise starts off in a pending state. It can then transition to a fulfilled state if the operation is successful, or to a rejected state if the operation fails.
+
+console.log("Before Promise");
+
+// get user function that returns a promise object.
+function getUserPromise(id) {
+  // return a new promise object
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // make a mock database call
+      console.log(`Retrieving user with id: ${id}`);
+      let user = {
+        id: id,
+        githubUsername: "ElonMusk",
+      };
+      if (user) {
+        // if the user is found, resolve (fulfill) the promise with the user object value.
+        resolve(user);
+      } else {
+        // if the user is not found, reject the promise with an error object containing a message.
+        reject(new Error("User not found"));
+      }
+    }, 3000);
+  });
+}
+
+// .then method is used to handle the resolved value of a promise.
+// .catch method is used to handle the rejected value of a promise.
+getUserPromise(2)
+  .then((user) => {
+    // this is the fullfilled state
+    console.log("User: ", user);
+  })
+  .catch((error) => {
+    // this is the rejected state
+    console.log("Error: ", error);
+  });
+
+console.log("After Promise");
