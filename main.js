@@ -75,3 +75,58 @@ getUserPromise(2)
   });
 
 console.log("After Promise");
+
+// Async and Await
+// Async and Await are a modern way to handle asynchronous code in JavaScript.
+// Async functions are functions that return a promise.
+
+console.log("Before Async/Await");
+
+// async keyword is used to define an async function.
+async function getUserAsync(id) {
+  // reutrn a promise object
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // make a mock database call
+      console.log(`Retrieving user with id: ${id}`);
+      let user = {
+        id: id,
+        githubUsername: "ElonMusk",
+      };
+      if (user) {
+        // if the user is found, resolve (fulfill) the promise with the user object value.
+        resolve(user);
+      } else {
+        // if the user is not found, reject the promise with an error object containing a message.
+        reject(new Error("User not found"));
+      }
+    }, 3000);
+  });
+}
+
+//1. traditional way to access result of promise object
+getUserAsync(4)
+  .then((user) => {
+    console.log("User: ", user);
+  })
+  .catch((error) => {
+    console.log("Error: ", error);
+  });
+
+//2. more modern way of accessing the result of a promise object.
+// display user object using async/await
+async function displayUser(id) {
+  // try block replaces the .then method
+  try {
+    // await keyword if used to wait for the result of a resolved promise.
+    const user = await getUserAsync(id); // this part replaces the .then methods callback function.
+    console.log("User: ", user);
+  } catch (error) {
+    // catch block replaces the .catch method
+    console.log("Error: ", error);
+  }
+}
+
+displayUser(3);
+
+console.log("After Async/Await");
